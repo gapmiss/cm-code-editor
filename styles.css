@@ -1,0 +1,106 @@
+.code-editor-view {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.code-editor-view .cm-editor {
+	flex: 1;
+	overflow: hidden;
+}
+
+.code-editor-view .cm-scroller {
+	font-family: var(--font-monospace);
+}
+
+.code-editor-view .cm-gutters {
+	background: var(--background-secondary);
+	border-right: 1px solid var(--background-modifier-border);
+	color: var(--text-faint);
+}
+
+.code-editor-view .cm-line.cm-activeLine {
+	background: color-mix(in srgb, var(--background-secondary-alt) 60%, transparent);
+}
+
+.code-editor-view .cm-activeLineGutter {
+	background: var(--background-secondary-alt);
+}
+
+.code-editor-view .cm-editor > .cm-scroller > .cm-selectionLayer .cm-selectionBackground {
+	background: var(--text-selection);
+}
+
+.code-editor-view .cm-editor.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground {
+	background: var(--text-selection);
+}
+
+.code-editor-view .cm-cursor {
+	border-left-color: var(--text-normal);
+}
+
+.code-editor-view .cm-foldGutter .cm-gutterElement {
+	color: var(--text-faint);
+	cursor: pointer;
+	padding: 0 var(--size-4-1);
+}
+
+.code-editor-view .cm-editor.cm-focused {
+	outline: 2px solid var(--interactive-accent);
+	outline-offset: -2px;
+}
+
+.code-editor-view .cm-searchMatch {
+	background: var(--text-highlight-bg);
+}
+
+.code-editor-view .cm-selectionMatch {
+	background: var(--text-highlight-bg);
+	opacity: 0.5;
+}
+
+.code-editor-view .tok-keyword { color: var(--code-keyword); }
+.code-editor-view .tok-operator { color: var(--code-operator); }
+.code-editor-view .tok-number { color: var(--code-value); }
+.code-editor-view .tok-string { color: var(--code-string); }
+.code-editor-view .tok-comment { color: var(--code-comment); font-style: italic; }
+.code-editor-view .tok-function { color: var(--code-function); }
+.code-editor-view .tok-variableName { color: var(--code-property); }
+.code-editor-view .tok-propertyName { color: var(--code-property); }
+.code-editor-view .tok-typeName { color: var(--code-tag); }
+.code-editor-view .tok-className { color: var(--code-tag); }
+.code-editor-view .tok-tagName { color: var(--code-tag); }
+.code-editor-view .tok-attributeName { color: var(--code-property); }
+.code-editor-view .tok-attributeValue { color: var(--code-string); }
+.code-editor-view .tok-namespace { color: var(--code-tag); }
+.code-editor-view .tok-macroName { color: var(--code-function); }
+.code-editor-view .tok-atom { color: var(--code-value); }
+.code-editor-view .tok-bool { color: var(--code-value); }
+.code-editor-view .tok-null { color: var(--code-value); }
+.code-editor-view .tok-punctuation { color: var(--code-punctuation); }
+.code-editor-view .tok-meta { color: var(--code-comment); }
+.code-editor-view .tok-invalid { color: var(--text-error); }
+.code-editor-view .tok-heading { font-weight: bold; }
+.code-editor-view .tok-strong { font-weight: bold; }
+.code-editor-view .tok-emphasis { font-style: italic; }
+.code-editor-view .tok-link { text-decoration: underline; }
+
+.code-editor-fence-modal .modal-content {
+	display: flex;
+	flex-direction: column;
+	height: 70vh;
+	padding: 0;
+}
+
+.code-editor-fence-modal .cm-editor {
+	flex: 1;
+	overflow: hidden;
+}
+
+.code-editor-fence-cm .cm-scroller {
+	font-family: var(--font-monospace);
+}
+
+.code-editor-create-modal .setting-item {
+	border: none;
+}

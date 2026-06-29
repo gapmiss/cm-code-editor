@@ -1,0 +1,28 @@
+# Logs
+*.log
+npm-debug.log*
+
+# Dependency directories
+node_modules/
+
+# Build output
+main.js
+*.js.map
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Privacy
+data.json
+.env
+
+.claude
+HANDOFF.md

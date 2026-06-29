@@ -1,0 +1,10 @@
+{
+  "id": "code-editor",
+  "name": "Code Editor",
+  "version": "0.1.0",
+  "minAppVersion": "1.13.0",
+  "description": "Code file editor with syntax highlighting and code folding.",
+  "author": "@gapmiss",
+  "authorUrl": "https://github.com/gapmiss",
+  "isDesktopOnly": false
+}
