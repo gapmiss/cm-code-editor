@@ -1,6 +1,6 @@
 import type { Extension } from '@codemirror/state';
 import { LanguageSupport, StreamLanguage } from '@codemirror/language';
-import { javascript, typescriptLanguage } from '@codemirror/lang-javascript';
+import { javascript } from '@codemirror/lang-javascript';
 import { python } from '@codemirror/lang-python';
 import { css } from '@codemirror/lang-css';
 import { html } from '@codemirror/lang-html';
@@ -40,7 +40,7 @@ const rLang = new LanguageSupport(StreamLanguage.define(r));
 const powerShellLang = new LanguageSupport(StreamLanguage.define(powerShell));
 const dockerFileLang = new LanguageSupport(StreamLanguage.define(dockerFile));
 
-register(['ts', 'tsx', 'mts', 'cts'], () => typescriptLanguage.extension);
+register(['ts', 'tsx', 'mts', 'cts'], () => javascript({ typescript: true, jsx: true }));
 register(['js', 'jsx', 'mjs', 'cjs'], () => javascript({ jsx: true }));
 register(['py', 'pyw', 'pyi'], () => python());
 register(['css'], () => css());

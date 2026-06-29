@@ -22,7 +22,7 @@ import {
 	syntaxHighlighting,
 } from '@codemirror/language';
 import { classHighlighter } from '@lezer/highlight';
-import { closeBrackets, closeBracketsKeymap, completionKeymap } from '@codemirror/autocomplete';
+import { autocompletion, closeBrackets, closeBracketsKeymap, completionKeymap } from '@codemirror/autocomplete';
 import { highlightSelectionMatches, searchKeymap } from '@codemirror/search';
 import { resolveLanguage } from './languages';
 import type { PluginSettings } from './settings';
@@ -89,6 +89,7 @@ export function buildExtensions(
 		indentOnInput(),
 		bracketMatching(),
 		closeBrackets(),
+		autocompletion(),
 		rectangularSelection(),
 		crosshairCursor(),
 		highlightSelectionMatches(),
