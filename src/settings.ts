@@ -9,6 +9,7 @@ export interface PluginSettings {
 	wordWrap: boolean;
 	fontSize: number;
 	fontFamily: string;
+	theme: string;
 }
 
 export const DEFAULT_SETTINGS: PluginSettings = {
@@ -18,6 +19,56 @@ export const DEFAULT_SETTINGS: PluginSettings = {
 	wordWrap: false,
 	fontSize: 14,
 	fontFamily: '',
+	theme: '',
+};
+
+export const THEME_OPTIONS: Record<string, string> = {
+	'': 'Obsidian (default)',
+	'abcdef': 'Abcdef',
+	'abyss': 'Abyss',
+	'androidstudio': 'Android Studio',
+	'andromeda': 'Andromeda',
+	'atomone': 'Atom One',
+	'aura': 'Aura',
+	'basicDark': 'Basic dark',
+	'basicLight': 'Basic light',
+	'bbedit': 'BBEdit',
+	'bespin': 'Bespin',
+	'consoleDark': 'Console dark',
+	'consoleLight': 'Console light',
+	'copilot': 'Copilot',
+	'darcula': 'Darcula',
+	'dracula': 'Dracula',
+	'duotoneDark': 'Duotone dark',
+	'duotoneLight': 'Duotone light',
+	'eclipse': 'Eclipse',
+	'githubDark': 'GitHub dark',
+	'githubLight': 'GitHub light',
+	'gruvboxDark': 'Gruvbox dark',
+	'gruvboxLight': 'Gruvbox light',
+	'kimbie': 'Kimbie',
+	'material': 'Material',
+	'materialDark': 'Material dark',
+	'materialLight': 'Material light',
+	'monokai': 'Monokai',
+	'monokaiDimmed': 'Monokai dimmed',
+	'nord': 'Nord',
+	'okaidia': 'Okaidia',
+	'quietlight': 'Quiet Light',
+	'red': 'Red',
+	'solarizedDark': 'Solarized dark',
+	'solarizedLight': 'Solarized light',
+	'sublime': 'Sublime',
+	'tokyoNight': 'Tokyo Night',
+	'tokyoNightDay': 'Tokyo Night day',
+	'tokyoNightStorm': 'Tokyo Night storm',
+	'tomorrowNightBlue': 'Tomorrow Night blue',
+	'vscodeDark': 'VS Code dark',
+	'vscodeLight': 'VS Code light',
+	'whiteDark': 'White dark',
+	'whiteLight': 'White light',
+	'xcodeDark': 'Xcode dark',
+	'xcodeLight': 'Xcode light',
 };
 
 export class CodeEditorSettingsTab extends PluginSettingTab {
@@ -48,7 +99,7 @@ export class CodeEditorSettingsTab extends PluginSettingTab {
 				s[k] = value as boolean;
 			} else if (k === 'fontSize') {
 				s[k] = value as number;
-			} else if (k === 'fontFamily') {
+			} else if (k === 'fontFamily' || k === 'theme') {
 				s[k] = value as string;
 			}
 		}
@@ -98,6 +149,22 @@ export class CodeEditorSettingsTab extends PluginSettingTab {
 							type: 'toggle',
 							key: 'wordWrap',
 							defaultValue: DEFAULT_SETTINGS.wordWrap,
+						},
+					},
+				],
+			},
+			{
+				type: 'group',
+				heading: 'Theme',
+				items: [
+					{
+						name: 'Syntax theme',
+						desc: 'Choose a syntax highlighting theme. The default inherits colors from your Obsidian theme.',
+						control: {
+							type: 'dropdown',
+							key: 'theme',
+							defaultValue: DEFAULT_SETTINGS.theme,
+							options: THEME_OPTIONS,
 						},
 					},
 				],
