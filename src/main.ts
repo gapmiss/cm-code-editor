@@ -2,8 +2,6 @@ import { Notice, Plugin } from 'obsidian';
 import { CodeEditorSettingsTab, DEFAULT_SETTINGS } from './settings';
 import type { PluginSettings } from './settings';
 import { CodeEditorView, VIEW_TYPE } from './view';
-import { FenceEditContext } from './fence-context';
-import { FenceEditModal } from './fence-modal';
 import { CreateCodeFileModal } from './create-modal';
 
 export default class CodeEditorPlugin extends Plugin {
@@ -36,17 +34,6 @@ export default class CodeEditorPlugin extends Plugin {
 			},
 		});
 
-		this.addCommand({
-			id: 'edit-code-block',
-			name: 'Edit code block',
-			editorCheckCallback: (checking, editor) => {
-				const context = FenceEditContext.create(editor);
-				if (!context.isInFence()) return false;
-				if (!checking) FenceEditModal.openOnCurrentCode(this);
-				return true;
-			},
-		});
-
 		this.registerEvent(
 			this.app.workspace.on('file-menu', (menu, file) => {
 				menu.addItem((item) => {
@@ -59,19 +46,6 @@ export default class CodeEditorPlugin extends Plugin {
 			}),
 		);
 
-		this.registerEvent(
-			this.app.workspace.on('editor-menu', (menu, editor) => {
-				const context = FenceEditContext.create(editor);
-				if (!context.isInFence()) return;
-				menu.addItem((item) => {
-					item.setTitle('Edit code block')
-						.setIcon('code')
-						.onClick(() => {
-							FenceEditModal.openOnCurrentCode(this);
-						});
-				});
-			}),
-		);
 	}
 
 	onunload(): void {

@@ -85,22 +85,6 @@
 .code-editor-view .tok-emphasis { font-style: italic; }
 .code-editor-view .tok-link { text-decoration: underline; }
 
-.code-editor-fence-modal .modal-content {
-	display: flex;
-	flex-direction: column;
-	height: 70vh;
-	padding: 0;
-}
-
-.code-editor-fence-modal .cm-editor {
-	flex: 1;
-	overflow: hidden;
-}
-
-.code-editor-fence-cm .cm-scroller {
-	font-family: var(--font-monospace);
-}
-
 .code-editor-create-modal .setting-item {
 	border: none;
 }
