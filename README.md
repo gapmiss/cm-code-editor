@@ -11,9 +11,9 @@ A code file editor for [Obsidian](https://obsidian.md) with syntax highlighting,
 - **Indent guides** with vertical markers at each indent level
 - **Line numbers** with active line highlighting
 - **Configurable tab size** (2 or 4 spaces)
-- **Search and replace** (Ctrl/Cmd+F)
+- **Search and replace** (Ctrl/Cmd+F) with match case, regex, and whole word toggles
 - **Bracket matching** and auto-closing
-- **Rectangular selection** (Alt+drag)
+- **Multiple cursors** and **rectangular selection** (Alt+drag)
 - **Font size zoom** with Ctrl/Cmd+scroll
 - **Create code file** command and context menu action with configurable default folder
 - **Configurable file extensions**, font family, and font size
