@@ -4,15 +4,18 @@ A code file editor for [Obsidian](https://obsidian.md) with syntax highlighting,
 
 ## Features
 
-- **Syntax highlighting** for 20+ languages with theme-aware colors
+- **Syntax highlighting** for 20+ languages
+- **45+ syntax themes** (Dracula, GitHub, Monokai, Nord, Solarized, VS Code, and more) or inherit from your Obsidian theme
 - **Autocompletion** with built-in language completions for JavaScript, TypeScript, CSS, HTML, SQL, and Python
 - **Code folding** with gutter controls
+- **Indent guides** with vertical markers at each indent level
 - **Line numbers** with active line highlighting
+- **Configurable tab size** (2 or 4 spaces)
 - **Search and replace** (Ctrl/Cmd+F)
 - **Bracket matching** and auto-closing
 - **Rectangular selection** (Alt+drag)
 - **Font size zoom** with Ctrl/Cmd+scroll
-- **Create code file** command and context menu action
+- **Create code file** command and context menu action with configurable default folder
 - **Configurable file extensions**, font family, and font size
 
 ## Supported languages
@@ -44,13 +47,34 @@ A code file editor for [Obsidian](https://obsidian.md) with syntax highlighting,
 
 ## Settings
 
+### Files
+
 | Setting | Description | Default |
 |---------|-------------|---------|
-| File extensions | Comma-separated list of extensions to open with this editor | `ts, js, py, css, c, cpp, go, rs, java, lua, php, json, yaml, toml, sh, html, xml, sql, rb` |
+| File extensions | Comma-separated list of extensions to open with this editor | `ts, js, py, css, ...` |
+| Default folder | Default folder for new code files (with fuzzy search) | Vault root |
+
+### Editor
+
+| Setting | Description | Default |
+|---------|-------------|---------|
 | Line numbers | Show line numbers in the gutter | On |
 | Code folding | Enable fold gutters | On |
 | Word wrap | Wrap long lines to the editor width | Off |
-| Font size | Font size in pixels (5-30) | 14 |
+| Tab size | Number of spaces per indent level (2 or 4) | 4 |
+| Indent guides | Show vertical lines at each indent level | Off |
+
+### Theme
+
+| Setting | Description | Default |
+|---------|-------------|---------|
+| Syntax theme | Choose from 45+ themes or inherit from Obsidian | Obsidian (default) |
+
+### Font
+
+| Setting | Description | Default |
+|---------|-------------|---------|
+| Font size | Font size in pixels (5-30), also adjustable with Ctrl+scroll | 14 |
 | Font family | CSS font-family value (empty inherits from Obsidian) | — |
 
 ## Installation
