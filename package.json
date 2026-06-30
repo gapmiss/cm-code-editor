@@ -1,6 +1,6 @@
 {
 	"name": "cm-code-editor",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "Code file editor with syntax highlighting and code folding.",
 	"main": "main.js",
 	"scripts": {
