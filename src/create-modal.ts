@@ -11,7 +11,15 @@ export class CreateCodeFileModal extends Modal {
 	constructor(plugin: CodeEditorPlugin, parent?: TAbstractFile) {
 		super(plugin.app);
 		this.plugin = plugin;
-		this.parent = parent ?? plugin.app.vault.getRoot();
+		if (parent) {
+			this.parent = parent;
+		} else {
+			const defaultPath = plugin.settings.defaultFolder;
+			const folder = defaultPath
+				? plugin.app.vault.getFolderByPath(normalizePath(defaultPath))
+				: null;
+			this.parent = folder ?? plugin.app.vault.getRoot();
+		}
 		this.fileExtension = plugin.settings.extensions[0] ?? 'txt';
 	}
 

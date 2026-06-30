@@ -1,6 +1,7 @@
 import { PluginSettingTab } from 'obsidian';
 import type { App, SettingDefinitionItem } from 'obsidian';
 import type CodeEditorPlugin from './main';
+import { FolderSuggest } from './folder-suggest';
 
 export interface PluginSettings {
 	extensions: string[];
@@ -10,6 +11,7 @@ export interface PluginSettings {
 	fontSize: number;
 	fontFamily: string;
 	theme: string;
+	defaultFolder: string;
 }
 
 export const DEFAULT_SETTINGS: PluginSettings = {
@@ -20,6 +22,7 @@ export const DEFAULT_SETTINGS: PluginSettings = {
 	fontSize: 14,
 	fontFamily: '',
 	theme: '',
+	defaultFolder: '',
 };
 
 export const THEME_OPTIONS: Record<string, string> = {
@@ -122,6 +125,21 @@ export class CodeEditorSettingsTab extends PluginSettingTab {
 							defaultValue: DEFAULT_SETTINGS.extensions.join(', '),
 							placeholder: 'ts, js, py, css, go, rs',
 							rows: 3,
+						},
+					},
+					{
+						name: 'Default folder',
+						desc: 'Default folder for new code files. Leave empty for vault root.',
+						render: (setting) => {
+							setting.addSearch((search) => {
+								new FolderSuggest(this.app, search.inputEl);
+								search.setPlaceholder('Vault folder');
+								search.setValue(this.plugin.settings.defaultFolder);
+								search.onChange((value) => {
+									this.plugin.settings.defaultFolder = value;
+									void this.plugin.saveSettings();
+								});
+							});
 						},
 					},
 					{
