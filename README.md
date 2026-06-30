@@ -2,6 +2,31 @@
 
 A code file editor for [Obsidian](https://obsidian.md) with syntax highlighting, code folding, and autocompletion. Powered by [CodeMirror 6](https://codemirror.net/).
 
+## Installation
+
+[Install from community.obsidian.md](https://community.obsidian.md/plugins/cm-code-editor)
+
+From Obsidian's settings or preferences:
+
+1. Community Plugins > Browse
+2. Search for "CM Code Editor"
+
+Manually:
+
+1. download the latest [release](https://github.com/gapmiss/cm-code-editor/releases/latest) archive
+2. uncompress the downloaded archive
+3. move the `cm-code-editor` folder to `/path/to/vault/.obsidian/plugins/` 
+4.  Settings > Community plugins > reload **Installed plugins**
+5.  enable plugin
+
+or:
+
+1.  download `main.js`, `manifest.json` & `styles.css` from the latest [release](https://github.com/gapmiss/cm-code-editor/releases/latest)
+2.  create a new folder `/path/to/vault/.obsidian/plugins/cm-code-editor`
+3.  move all 3 files to `/path/to/vault/.obsidian/plugins/cm-code-editor`
+4.  Settings > Community plugins > reload **Installed plugins**
+5.  enable plugin
+
 ## Features
 
 - **Syntax highlighting** for 20+ languages
@@ -76,21 +101,6 @@ A code file editor for [Obsidian](https://obsidian.md) with syntax highlighting,
 |---------|-------------|---------|
 | Font size | Font size in pixels (5-30), also adjustable with Ctrl+scroll | 14 |
 | Font family | CSS font-family value (empty inherits from Obsidian) | — |
-
-## Installation
-
-### From community plugins
-
-1. Open **Settings > Community plugins**
-2. Search for **CM Code Editor**
-3. Click **Install**, then **Enable**
-
-### Manual
-
-1. Download `main.js`, `manifest.json`, and `styles.css` from the [latest release](https://github.com/gapmiss/cm-code-editor/releases/latest)
-2. Create a `cm-code-editor` folder in your vault's `.obsidian/plugins/` directory
-3. Copy the downloaded files into the folder
-4. Enable the plugin in **Settings > Community plugins**
 
 ## License
 
