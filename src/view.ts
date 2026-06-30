@@ -2,6 +2,7 @@ import { TextFileView } from 'obsidian';
 import type { TFile, WorkspaceLeaf } from 'obsidian';
 import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
+import { findNext, findPrevious, openSearchPanel, searchPanelOpen } from '@codemirror/search';
 import { resolveLanguage } from './languages';
 import { applySettings, buildExtensions, createCompartments } from './extensions';
 import type { EditorCompartments } from './extensions';
@@ -61,6 +62,26 @@ export class CodeEditorView extends TextFileView {
 				}
 			}),
 		);
+
+		this.registerDomEvent(window, 'keydown', (evt: KeyboardEvent) => {
+			if (!this.editor) return;
+			const mod = evt.ctrlKey || evt.metaKey;
+			if (!mod || evt.altKey) return;
+			const editorFocused = this.editor.hasFocus;
+			const panelFocused = this.contentEl.contains(this.contentEl.ownerDocument.activeElement);
+			if (!editorFocused && !panelFocused) return;
+
+			if (evt.key === 'f' && !evt.shiftKey) {
+				evt.preventDefault();
+				evt.stopImmediatePropagation();
+				openSearchPanel(this.editor);
+			} else if ((evt.key === 'g' || evt.key === 'G') && searchPanelOpen(this.editor.state)) {
+				evt.preventDefault();
+				evt.stopImmediatePropagation();
+				if (evt.shiftKey) findPrevious(this.editor);
+				else findNext(this.editor);
+			}
+		}, { capture: true });
 
 		this.registerDomEvent(this.contentEl, 'wheel', (evt) => {
 			if (!evt.ctrlKey && !evt.metaKey) return;

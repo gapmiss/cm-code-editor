@@ -25,9 +25,10 @@ import {
 import { indentationMarkers } from '@replit/codemirror-indentation-markers';
 import { classHighlighter } from '@lezer/highlight';
 import { autocompletion, closeBrackets, closeBracketsKeymap, completionKeymap } from '@codemirror/autocomplete';
-import { highlightSelectionMatches, searchKeymap } from '@codemirror/search';
+import { highlightSelectionMatches, search, searchKeymap } from '@codemirror/search';
 import * as themes from '@uiw/codemirror-themes-all';
 import { resolveLanguage } from './languages';
+import { createSearchPanel } from './search-panel';
 import type { PluginSettings } from './settings';
 
 export interface EditorCompartments {
@@ -153,6 +154,7 @@ export function buildExtensions(
 		compartments.tabSize.of(tabSizeExtension(settings.tabSize)),
 		compartments.indentGuides.of(indentGuidesExtension(settings.indentGuides)),
 
+		EditorState.allowMultipleSelections.of(true),
 		highlightActiveLine(),
 		highlightSpecialChars(),
 		history(),
@@ -165,6 +167,7 @@ export function buildExtensions(
 		rectangularSelection(),
 		crosshairCursor(),
 		highlightSelectionMatches(),
+		search({ createPanel: createSearchPanel }),
 
 		keymap.of([
 			...closeBracketsKeymap,
