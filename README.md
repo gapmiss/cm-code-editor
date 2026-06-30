@@ -1,4 +1,4 @@
-# Code Editor
+# CM Code Editor
 
 A code file editor for [Obsidian](https://obsidian.md) with syntax highlighting, code folding, and autocompletion. Powered by [CodeMirror 6](https://codemirror.net/).
 
@@ -82,13 +82,13 @@ A code file editor for [Obsidian](https://obsidian.md) with syntax highlighting,
 ### From community plugins
 
 1. Open **Settings > Community plugins**
-2. Search for **Code Editor**
+2. Search for **CM Code Editor**
 3. Click **Install**, then **Enable**
 
 ### Manual
 
-1. Download `main.js`, `manifest.json`, and `styles.css` from the [latest release](https://github.com/gapmiss/code-editor/releases/latest)
-2. Create a `code-editor` folder in your vault's `.obsidian/plugins/` directory
+1. Download `main.js`, `manifest.json`, and `styles.css` from the [latest release](https://github.com/gapmiss/cm-code-editor/releases/latest)
+2. Create a `cm-code-editor` folder in your vault's `.obsidian/plugins/` directory
 3. Copy the downloaded files into the folder
 4. Enable the plugin in **Settings > Community plugins**
 

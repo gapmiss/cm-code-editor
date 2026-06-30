@@ -1,7 +1,7 @@
 {
-  "name": "code-editor",
+  "name": "cm-code-editor",
   "version": "0.1.0",
-  "description": "VSCode-like code editor.",
+  "description": "Code file editor with syntax highlighting and code folding.",
   "main": "main.js",
   "scripts": {
     "dev": "node esbuild.config.mjs",

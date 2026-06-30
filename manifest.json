@@ -1,6 +1,6 @@
 {
-  "id": "code-editor",
-  "name": "Code Editor",
+  "id": "cm-code-editor",
+  "name": "CM Code Editor",
   "version": "0.1.0",
   "minAppVersion": "1.13.0",
   "description": "Code file editor with syntax highlighting and code folding.",

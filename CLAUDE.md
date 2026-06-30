@@ -1,4 +1,4 @@
-# Code Editor - Obsidian Plugin
+# CM Code Editor - Obsidian Plugin
 
 ## Overview
 
