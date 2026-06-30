@@ -1,8 +1,8 @@
-import { TextFileView } from 'obsidian';
+import { Scope, TextFileView } from 'obsidian';
 import type { TFile, WorkspaceLeaf } from 'obsidian';
 import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
-import { findNext, findPrevious, openSearchPanel, searchPanelOpen } from '@codemirror/search';
+import { findNext, findPrevious, openSearchPanel } from '@codemirror/search';
 import { resolveLanguage } from './languages';
 import { applySettings, buildExtensions, createCompartments } from './extensions';
 import type { EditorCompartments } from './extensions';
@@ -20,6 +20,7 @@ export class CodeEditorView extends TextFileView {
 	constructor(leaf: WorkspaceLeaf, plugin: CodeEditorPlugin) {
 		super(leaf);
 		this.plugin = plugin;
+		this.scope = new Scope(this.app.scope);
 	}
 
 	getViewType(): string {
@@ -63,25 +64,40 @@ export class CodeEditorView extends TextFileView {
 			}),
 		);
 
-		this.registerDomEvent(window, 'keydown', (evt: KeyboardEvent) => {
+		this.scope!.register(['Mod'], 'f', (evt) => {
 			if (!this.editor) return;
-			const mod = evt.ctrlKey || evt.metaKey;
-			if (!mod || evt.altKey) return;
-			const editorFocused = this.editor.hasFocus;
-			const panelFocused = this.contentEl.contains(this.contentEl.ownerDocument.activeElement);
-			if (!editorFocused && !panelFocused) return;
+			evt.preventDefault();
+			openSearchPanel(this.editor);
+			return false;
+		});
 
-			if (evt.key === 'f' && !evt.shiftKey) {
-				evt.preventDefault();
-				evt.stopImmediatePropagation();
-				openSearchPanel(this.editor);
-			} else if ((evt.key === 'g' || evt.key === 'G') && searchPanelOpen(this.editor.state)) {
-				evt.preventDefault();
-				evt.stopImmediatePropagation();
-				if (evt.shiftKey) findPrevious(this.editor);
-				else findNext(this.editor);
-			}
-		}, { capture: true });
+		this.scope!.register(['Mod'], 'g', (evt) => {
+			if (!this.editor) return;
+			evt.preventDefault();
+			findNext(this.editor);
+			return false;
+		});
+
+		this.scope!.register(['Mod', 'Shift'], 'g', (evt) => {
+			if (!this.editor) return;
+			evt.preventDefault();
+			findPrevious(this.editor);
+			return false;
+		});
+
+		this.scope!.register([], 'F3', (evt) => {
+			if (!this.editor) return;
+			evt.preventDefault();
+			findNext(this.editor);
+			return false;
+		});
+
+		this.scope!.register(['Shift'], 'F3', (evt) => {
+			if (!this.editor) return;
+			evt.preventDefault();
+			findPrevious(this.editor);
+			return false;
+		});
 
 		this.registerDomEvent(this.contentEl, 'wheel', (evt) => {
 			if (!evt.ctrlKey && !evt.metaKey) return;

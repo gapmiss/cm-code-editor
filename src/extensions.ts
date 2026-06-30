@@ -1,4 +1,4 @@
-import { Compartment, EditorState } from '@codemirror/state';
+import { Compartment, EditorSelection, EditorState } from '@codemirror/state';
 import type { Extension } from '@codemirror/state';
 import {
 	EditorView,
@@ -12,7 +12,7 @@ import {
 	lineNumbers,
 	rectangularSelection,
 } from '@codemirror/view';
-import { defaultKeymap, history, historyKeymap, indentWithTab } from '@codemirror/commands';
+import { defaultKeymap, history, historyKeymap } from '@codemirror/commands';
 import {
 	bracketMatching,
 	codeFolding,
@@ -121,7 +121,52 @@ function wrapExtension(enabled: boolean): Extension {
 }
 
 function tabSizeExtension(size: number): Extension {
-	return [EditorState.tabSize.of(size), indentUnit.of(' '.repeat(size))];
+	return [
+		EditorState.tabSize.of(size),
+		indentUnit.of(' '.repeat(size)),
+		keymap.of([{
+			key: 'Tab',
+			run: (view) => {
+				const unit = ' '.repeat(view.state.tabSize);
+				const { state } = view;
+				const changes = state.changeByRange((range) => {
+					if (!range.empty) {
+						const from = state.doc.lineAt(range.from);
+						const to = state.doc.lineAt(range.to);
+						const lineChanges: { from: number; insert: string }[] = [];
+						for (let i = from.number; i <= to.number; i++) {
+							lineChanges.push({ from: state.doc.line(i).from, insert: unit });
+						}
+						const totalInserted = unit.length * lineChanges.length;
+						return {
+							changes: lineChanges,
+							range: EditorSelection.range(range.from, range.to + totalInserted),
+						};
+					}
+					return {
+						changes: { from: range.from, insert: unit },
+						range: EditorSelection.cursor(range.from + unit.length),
+					};
+				});
+				view.dispatch(state.update(changes, { scrollIntoView: true, userEvent: 'input.indent' }));
+				return true;
+			},
+			shift: (view) => {
+				const { state } = view;
+				const ts = state.tabSize;
+				const changes: { from: number; to: number }[] = [];
+				for (let i = state.doc.lineAt(state.selection.main.from).number;
+					i <= state.doc.lineAt(state.selection.main.to).number; i++) {
+					const line = state.doc.line(i);
+					const remove = Math.min((/^ */.exec(line.text)![0]).length, ts);
+					if (remove > 0) changes.push({ from: line.from, to: line.from + remove });
+				}
+				if (!changes.length) return true;
+				view.dispatch({ changes, userEvent: 'input.indent' });
+				return true;
+			},
+		}]),
+	];
 }
 
 function indentGuidesExtension(enabled: boolean): Extension {
@@ -176,7 +221,6 @@ export function buildExtensions(
 			...historyKeymap,
 			...foldKeymap,
 			...completionKeymap,
-			indentWithTab,
 		]),
 
 		EditorView.updateListener.of((update) => {
