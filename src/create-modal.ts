@@ -27,11 +27,31 @@ export class CreateCodeFileModal extends Modal {
 		const { contentEl } = this;
 		contentEl.addClass('code-editor-create-modal');
 
-		const nameInput = new TextComponent(contentEl);
+		this.setTitle('Create code file');
+
+		const parentPath = this.parent instanceof TFolder
+			? this.parent.path
+			: this.parent instanceof TFile
+				? (this.parent.parent?.path ?? '/')
+				: '/';
+		const pathEl = contentEl.createEl('p', {
+			cls: 'code-editor-create-modal-path',
+		});
+		pathEl.createSpan({ text: 'Creating in: ' });
+		pathEl.createSpan({
+			cls: 'code-editor-create-modal-path-value',
+			text: parentPath,
+		});
+
+		const row = contentEl.createDiv({ cls: 'code-editor-create-modal-row' });
+
+		const nameInput = new TextComponent(row);
 		nameInput.setPlaceholder('File name');
+		nameInput.inputEl.addClass('code-editor-create-modal-input');
 		nameInput.onChange((value) => { this.fileName = value; });
 
-		const extDropdown = new DropdownComponent(contentEl);
+		const extDropdown = new DropdownComponent(row);
+		extDropdown.selectEl.addClass('code-editor-create-modal-ext');
 		const options: Record<string, string> = {};
 		for (const ext of this.plugin.settings.extensions) {
 			options[ext] = `.${ext}`;
@@ -43,6 +63,7 @@ export class CreateCodeFileModal extends Modal {
 		const submitButton = new ButtonComponent(contentEl);
 		submitButton.setCta();
 		submitButton.setButtonText('Create');
+		submitButton.buttonEl.addClass('code-editor-create-modal-submit');
 		submitButton.onClick(() => void this.create());
 
 		nameInput.inputEl.addEventListener('keydown', (evt: KeyboardEvent) => {

@@ -214,3 +214,36 @@
 .code-editor-create-modal .setting-item {
 	border: none;
 }
+
+.code-editor-create-modal .modal-content {
+	padding: var(--size-4-4);
+}
+
+.code-editor-create-modal-path {
+	margin: 0 0 var(--size-4-4) 0;
+	color: var(--text-muted);
+	font-size: var(--font-ui-small);
+}
+
+.code-editor-create-modal-path-value {
+	color: var(--text-accent);
+}
+
+.code-editor-create-modal-row {
+	display: flex;
+	align-items: center;
+	gap: var(--size-4-3);
+	margin-bottom: var(--size-4-4);
+}
+
+.code-editor-create-modal-input {
+	flex: 1;
+}
+
+.code-editor-create-modal-ext {
+	flex: none;
+}
+
+.code-editor-create-modal-submit {
+	width: 100%;
+}
