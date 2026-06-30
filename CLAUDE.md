@@ -7,7 +7,7 @@ CodeMirror 6-based code file editor plugin for Obsidian. Opens registered file e
 ## Architecture
 
 - `src/main.ts` — Plugin entry point. Registers the view, settings tab, commands, and file menu items.
-- `src/view.ts` — `CodeEditorView` extends `TextFileView`. Creates and manages the CM6 `EditorView`. Handles file loading, saving, and Ctrl+scroll zoom.
+- `src/view.ts` — `CodeEditorView` extends `TextFileView`. Creates and manages the CM6 `EditorView`. Handles file loading, saving, Ctrl+scroll zoom, and search hotkeys via Obsidian `Scope`.
 - `src/extensions.ts` — CM6 extension builder. Uses **Compartments** for dynamic reconfiguration of: language, line numbers, folding, wrap, font, theme, tab size, indent guides.
 - `src/settings.ts` — `PluginSettings` interface, defaults, theme options map, and settings tab using `getSettingDefinitions()` (Obsidian 1.13+ declarative API).
 - `src/languages.ts` — Maps file extensions to CM6 language support. Includes modern language packages and legacy stream-based languages.
@@ -20,6 +20,9 @@ CodeMirror 6-based code file editor plugin for Obsidian. Opens registered file e
 - **Compartments** allow live-updating settings without rebuilding editor state. Each dynamic setting has a compartment in `EditorCompartments`, a function that returns an `Extension`, and is wired into both `buildExtensions()` and `applySettings()`.
 - **Theme switching**: when theme is `''` (Obsidian default), the theme compartment contains `syntaxHighlighting(classHighlighter)` which applies `.tok-*` CSS classes styled by `styles.css`. When a CM6 theme is selected, `classHighlighter` is swapped out and the theme extension takes over.
 - **Settings tab** uses `getSettingDefinitions()` (not `display()`). Custom controls like folder suggest use `SettingDefinitionRender` with a `render` callback.
+- **Search hotkeys** (Cmd+F, Cmd+G, F3) use `this.scope = new Scope(this.app.scope)` on the view, which overrides Obsidian's default hotkeys (e.g. graph view's Cmd+G) when the code editor is active.
+- **Tab indentation** uses a custom Tab/Shift-Tab keybinding that reads `EditorState.tabSize` (shared facet from `@codemirror/state`) instead of `indentWithTab` from `@codemirror/commands`, because `indentWithTab` reads `indentUnit` from Obsidian's `@codemirror/language` — a different facet instance than the one bundled in this plugin.
+- **`@codemirror/language` must NOT be external** in esbuild. It is intentionally bundled because legacy stream languages (shell, ruby, lua, toml, etc.) use `StreamLanguage` which Obsidian's runtime may not expose. The tradeoff is a split `indentUnit` facet, which is why Tab uses the custom keybinding above.
 
 ## Build
 
