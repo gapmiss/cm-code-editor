@@ -12,6 +12,8 @@ export interface PluginSettings {
 	fontFamily: string;
 	theme: string;
 	defaultFolder: string;
+	tabSize: number;
+	indentGuides: boolean;
 }
 
 export const DEFAULT_SETTINGS: PluginSettings = {
@@ -23,6 +25,8 @@ export const DEFAULT_SETTINGS: PluginSettings = {
 	fontFamily: '',
 	theme: '',
 	defaultFolder: '',
+	tabSize: 4,
+	indentGuides: false,
 };
 
 export const THEME_OPTIONS: Record<string, string> = {
@@ -86,6 +90,9 @@ export class CodeEditorSettingsTab extends PluginSettingTab {
 		if (key === 'extensions') {
 			return this.plugin.settings.extensions.join(', ');
 		}
+		if (key === 'tabSize') {
+			return String(this.plugin.settings.tabSize);
+		}
 		return this.plugin.settings[key as keyof PluginSettings];
 	}
 
@@ -98,8 +105,10 @@ export class CodeEditorSettingsTab extends PluginSettingTab {
 		} else {
 			const s = this.plugin.settings;
 			const k = key as keyof PluginSettings;
-			if (k === 'lineNumbers' || k === 'codeFolding' || k === 'wordWrap') {
+			if (k === 'lineNumbers' || k === 'codeFolding' || k === 'wordWrap' || k === 'indentGuides') {
 				s[k] = value as boolean;
+			} else if (k === 'tabSize') {
+				s[k] = Number(value);
 			} else if (k === 'fontSize') {
 				s[k] = value as number;
 			} else if (k === 'fontFamily' || k === 'theme') {
@@ -114,7 +123,7 @@ export class CodeEditorSettingsTab extends PluginSettingTab {
 		return [
 			{
 				type: 'group',
-				heading: 'Editor',
+				heading: 'Files',
 				items: [
 					{
 						name: 'File extensions',
@@ -142,6 +151,12 @@ export class CodeEditorSettingsTab extends PluginSettingTab {
 							});
 						},
 					},
+				],
+			},
+			{
+				type: 'group',
+				heading: 'Editor',
+				items: [
 					{
 						name: 'Line numbers',
 						desc: 'Show line numbers in the gutter.',
@@ -167,6 +182,25 @@ export class CodeEditorSettingsTab extends PluginSettingTab {
 							type: 'toggle',
 							key: 'wordWrap',
 							defaultValue: DEFAULT_SETTINGS.wordWrap,
+						},
+					},
+					{
+						name: 'Tab size',
+						desc: 'Number of spaces per indent level.',
+						control: {
+							type: 'dropdown',
+							key: 'tabSize',
+							defaultValue: String(DEFAULT_SETTINGS.tabSize),
+							options: { '2': '2', '4': '4' },
+						},
+					},
+					{
+						name: 'Indent guides',
+						desc: 'Show vertical lines at each indent level.',
+						control: {
+							type: 'toggle',
+							key: 'indentGuides',
+							defaultValue: DEFAULT_SETTINGS.indentGuides,
 						},
 					},
 				],

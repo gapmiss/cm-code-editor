@@ -1,4 +1,4 @@
-import { Compartment } from '@codemirror/state';
+import { Compartment, EditorState } from '@codemirror/state';
 import type { Extension } from '@codemirror/state';
 import {
 	EditorView,
@@ -19,8 +19,10 @@ import {
 	foldGutter,
 	foldKeymap,
 	indentOnInput,
+	indentUnit,
 	syntaxHighlighting,
 } from '@codemirror/language';
+import { indentationMarkers } from '@replit/codemirror-indentation-markers';
 import { classHighlighter } from '@lezer/highlight';
 import { autocompletion, closeBrackets, closeBracketsKeymap, completionKeymap } from '@codemirror/autocomplete';
 import { highlightSelectionMatches, searchKeymap } from '@codemirror/search';
@@ -35,6 +37,8 @@ export interface EditorCompartments {
 	wrap: Compartment;
 	font: Compartment;
 	theme: Compartment;
+	tabSize: Compartment;
+	indentGuides: Compartment;
 }
 
 export function createCompartments(): EditorCompartments {
@@ -45,6 +49,8 @@ export function createCompartments(): EditorCompartments {
 		wrap: new Compartment(),
 		font: new Compartment(),
 		theme: new Compartment(),
+		tabSize: new Compartment(),
+		indentGuides: new Compartment(),
 	};
 }
 
@@ -113,6 +119,14 @@ function wrapExtension(enabled: boolean): Extension {
 	return enabled ? EditorView.lineWrapping : [];
 }
 
+function tabSizeExtension(size: number): Extension {
+	return [EditorState.tabSize.of(size), indentUnit.of(' '.repeat(size))];
+}
+
+function indentGuidesExtension(enabled: boolean): Extension {
+	return enabled ? indentationMarkers() : [];
+}
+
 function fontExtension(settings: PluginSettings): Extension {
 	const family = settings.fontFamily || 'inherit';
 	const size = `${settings.fontSize}px`;
@@ -136,6 +150,8 @@ export function buildExtensions(
 		compartments.wrap.of(wrapExtension(settings.wordWrap)),
 		compartments.font.of(fontExtension(settings)),
 		compartments.theme.of(themeExtension(settings.theme)),
+		compartments.tabSize.of(tabSizeExtension(settings.tabSize)),
+		compartments.indentGuides.of(indentGuidesExtension(settings.indentGuides)),
 
 		highlightActiveLine(),
 		highlightSpecialChars(),
@@ -182,6 +198,8 @@ export function applySettings(
 			compartments.wrap.reconfigure(wrapExtension(settings.wordWrap)),
 			compartments.font.reconfigure(fontExtension(settings)),
 			compartments.theme.reconfigure(themeExtension(settings.theme)),
+			compartments.tabSize.reconfigure(tabSizeExtension(settings.tabSize)),
+			compartments.indentGuides.reconfigure(indentGuidesExtension(settings.indentGuides)),
 		],
 	});
 }
