@@ -80,7 +80,6 @@ export function createSearchPanel(view: EditorView): Panel {
 		cls: 'code-editor-search-toggle',
 		attr: { 'aria-label': 'Whole word', 'data-tooltip-position': 'top', type: 'button' },
 	});
-	// eslint-disable-next-line obsidianmd/ui/sentence-case -- symbolic label, not prose
 	wordBtn.setText('ab');
 
 	const closeBtn = iconBtn(findRow, 'Close search', 'M18 6L6 18M6 6l12 12');
