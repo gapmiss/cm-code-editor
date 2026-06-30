@@ -26,7 +26,7 @@ export class CodeEditorView extends TextFileView {
 	}
 
 	getDisplayText(): string {
-		return this.file?.basename ?? 'Code';
+		return this.file?.name ?? 'Code';
 	}
 
 	getIcon(): string {
