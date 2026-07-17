@@ -76,11 +76,12 @@ export function createSearchPanel(view: EditorView): Panel {
 	});
 	regexpBtn.setText('.*');
 
+	const wholeWordLabel = 'ab';
 	const wordBtn = findRow.createEl('button', {
 		cls: 'code-editor-search-toggle',
+		text: wholeWordLabel,
 		attr: { 'aria-label': 'Whole word', 'data-tooltip-position': 'top', type: 'button' },
 	});
-	wordBtn.setText('ab');
 
 	const closeBtn = iconBtn(findRow, 'Close search', 'M18 6L6 18M6 6l12 12');
 	closeBtn.addClass('code-editor-search-close');

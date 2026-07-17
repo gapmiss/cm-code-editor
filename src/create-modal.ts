@@ -5,20 +5,19 @@ import type CodeEditorPlugin from './main';
 export class CreateCodeFileModal extends Modal {
 	private fileName = '';
 	private fileExtension: string;
-	private parent: TAbstractFile;
+	private targetPath: string;
 	private plugin: CodeEditorPlugin;
 
 	constructor(plugin: CodeEditorPlugin, parent?: TAbstractFile) {
 		super(plugin.app);
 		this.plugin = plugin;
 		if (parent) {
-			this.parent = parent;
+			this.targetPath = parent instanceof TFile
+				? (parent.parent?.path ?? '/')
+				: parent.path;
 		} else {
-			const defaultPath = plugin.settings.defaultFolder;
-			const folder = defaultPath
-				? plugin.app.vault.getFolderByPath(normalizePath(defaultPath))
-				: null;
-			this.parent = folder ?? plugin.app.vault.getRoot();
+			const defaultPath = plugin.settings.defaultFolder.trim();
+			this.targetPath = defaultPath ? normalizePath(defaultPath) : '/';
 		}
 		this.fileExtension = plugin.settings.extensions[0] ?? 'txt';
 	}
@@ -29,18 +28,13 @@ export class CreateCodeFileModal extends Modal {
 
 		this.setTitle('Create code file');
 
-		const parentPath = this.parent instanceof TFolder
-			? this.parent.path
-			: this.parent instanceof TFile
-				? (this.parent.parent?.path ?? '/')
-				: '/';
 		const pathEl = contentEl.createEl('p', {
 			cls: 'code-editor-create-modal-path',
 		});
 		pathEl.createSpan({ text: 'Creating in: ' });
 		pathEl.createSpan({
 			cls: 'code-editor-create-modal-path-value',
-			text: parentPath,
+			text: this.targetPath,
 		});
 
 		const row = contentEl.createDiv({ cls: 'code-editor-create-modal-row' });
@@ -81,6 +75,16 @@ export class CreateCodeFileModal extends Modal {
 		nameInput.inputEl.focus();
 	}
 
+	private async ensureFolder(folderPath: string): Promise<TFolder> {
+		if (folderPath === '/') return this.app.vault.getRoot();
+		const existing = this.app.vault.getAbstractFileByPath(folderPath);
+		if (existing instanceof TFolder) return existing;
+		await this.app.vault.createFolder(folderPath);
+		const created = this.app.vault.getAbstractFileByPath(folderPath);
+		if (created instanceof TFolder) return created;
+		return this.app.vault.getRoot();
+	}
+
 	private async create(): Promise<void> {
 		const name = this.fileName.trim();
 		if (!name) {
@@ -90,12 +94,7 @@ export class CreateCodeFileModal extends Modal {
 
 		this.close();
 
-		const folder = this.parent instanceof TFile
-			? this.parent.parent ?? this.app.vault.getRoot()
-			: this.parent instanceof TFolder
-				? this.parent
-				: this.app.vault.getRoot();
-
+		const folder = await this.ensureFolder(this.targetPath);
 		const path = normalizePath(`${folder.path}/${name}.${this.fileExtension}`);
 		const existing = this.app.vault.getAbstractFileByPath(path);
 
