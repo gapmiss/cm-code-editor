@@ -102,12 +102,14 @@ export class CreateCodeFileModal extends Modal {
 			new Notice('File already exists.');
 			const leaf = this.app.workspace.getLeaf(true);
 			await leaf.openFile(existing);
+			this.app.workspace.setActiveLeaf(leaf, { focus: true });
 			return;
 		}
 
 		const newFile = await this.app.vault.create(path, '');
 		const leaf = this.app.workspace.getLeaf(true);
 		await leaf.openFile(newFile);
+		this.app.workspace.setActiveLeaf(leaf, { focus: true });
 	}
 
 	onClose(): void {
