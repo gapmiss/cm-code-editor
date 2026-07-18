@@ -2,8 +2,8 @@
 
 A code file editor for [Obsidian](https://obsidian.md) with syntax highlighting, code folding, and autocompletion. Powered by [CodeMirror 6](https://codemirror.net/).
 
-| Demo | Settings |
-|----------|------------|
+| Editor & Create modal                   | Settings                                           |
+| --------------------------------------- | -------------------------------------------------- |
 | ![demo](assets/cm-code-editor-demo.png) | ![settings UI](assets/cm-code-editor-settings.png) |
 
 ## Installation
@@ -49,62 +49,62 @@ or:
 
 ## Supported languages
 
-| Language | Extensions |
-|----------|------------|
-| TypeScript | `.ts` `.tsx` `.mts` `.cts` |
-| JavaScript | `.js` `.jsx` `.mjs` `.cjs` |
-| Python | `.py` `.pyw` `.pyi` |
-| CSS/SCSS/Less | `.css` `.scss` `.less` |
-| HTML | `.html` `.htm` `.svelte` `.vue` |
-| JSON | `.json` `.jsonc` |
-| Markdown | `.md` `.markdown` |
-| XML | `.xml` `.svg` `.xsl` `.xsd` |
-| SQL | `.sql` |
-| YAML | `.yaml` `.yml` |
-| Rust | `.rs` |
-| Go | `.go` |
-| C/C++ | `.c` `.h` `.cpp` `.hpp` `.cc` `.cxx` `.hxx` |
-| Java | `.java` |
-| PHP | `.php` |
-| Shell | `.sh` `.bash` `.zsh` |
-| Ruby | `.rb` `.ruby` |
-| Lua | `.lua` |
-| TOML | `.toml` |
-| R | `.r` `.rmd` |
-| PowerShell | `.ps1` `.psm1` |
-| Dockerfile | `Dockerfile` |
+| Language      | Extensions                                  |
+| ------------- | ------------------------------------------- |
+| TypeScript    | `.ts` `.tsx` `.mts` `.cts`                  |
+| JavaScript    | `.js` `.jsx` `.mjs` `.cjs`                  |
+| Python        | `.py` `.pyw` `.pyi`                         |
+| CSS/SCSS/Less | `.css` `.scss` `.less`                      |
+| HTML          | `.html` `.htm` `.svelte` `.vue`             |
+| JSON          | `.json` `.jsonc`                            |
+| Markdown      | `.md` `.markdown`                           |
+| XML           | `.xml` `.svg` `.xsl` `.xsd`                 |
+| SQL           | `.sql`                                      |
+| YAML          | `.yaml` `.yml`                              |
+| Rust          | `.rs`                                       |
+| Go            | `.go`                                       |
+| C/C++         | `.c` `.h` `.cpp` `.hpp` `.cc` `.cxx` `.hxx` |
+| Java          | `.java`                                     |
+| PHP           | `.php`                                      |
+| Shell         | `.sh` `.bash` `.zsh`                        |
+| Ruby          | `.rb` `.ruby`                               |
+| Lua           | `.lua`                                      |
+| TOML          | `.toml`                                     |
+| R             | `.r` `.rmd`                                 |
+| PowerShell    | `.ps1` `.psm1`                              |
+| Dockerfile    | `Dockerfile`                                |
 
 ## Settings
 
 ### Files
 
-| Setting | Description | Default |
-|---------|-------------|---------|
+| Setting         | Description                                                 | Default                |
+| --------------- | ----------------------------------------------------------- | ---------------------- |
 | File extensions | Comma-separated list of extensions to open with this editor | `ts, js, py, css, ...` |
-| Default folder | Default folder for new code files (with fuzzy search) | Vault root |
+| Default folder  | Default folder for new code files (with fuzzy search)       | Vault root             |
 
 ### Editor
 
-| Setting | Description | Default |
-|---------|-------------|---------|
-| Line numbers | Show line numbers in the gutter | On |
-| Code folding | Enable fold gutters | On |
-| Word wrap | Wrap long lines to the editor width | Off |
-| Tab size | Number of spaces per indent level (2 or 4) | 4 |
-| Indent guides | Show vertical lines at each indent level | Off |
+| Setting       | Description                                | Default |
+| ------------- | ------------------------------------------ | ------- |
+| Line numbers  | Show line numbers in the gutter            | On      |
+| Code folding  | Enable fold gutters                        | On      |
+| Word wrap     | Wrap long lines to the editor width        | Off     |
+| Tab size      | Number of spaces per indent level (2 or 4) | 4       |
+| Indent guides | Show vertical lines at each indent level   | Off     |
 
 ### Theme
 
-| Setting | Description | Default |
-|---------|-------------|---------|
+| Setting      | Description                                     | Default            |
+| ------------ | ----------------------------------------------- | ------------------ |
 | Syntax theme | Choose from 45+ themes or inherit from Obsidian | Obsidian (default) |
 
 ### Font
 
-| Setting | Description | Default |
-|---------|-------------|---------|
-| Font size | Font size in pixels (5-30), also adjustable with Ctrl+scroll | 14 |
-| Font family | CSS font-family value (empty inherits from Obsidian) | — |
+| Setting     | Description                                                  | Default |
+| ----------- | ------------------------------------------------------------ | ------- |
+| Font size   | Font size in pixels (5-30), also adjustable with Ctrl+scroll | 14      |
+| Font family | CSS font-family value (empty inherits from Obsidian)         | —       |
 
 ## License
 
