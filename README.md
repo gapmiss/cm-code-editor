@@ -2,6 +2,10 @@
 
 A code file editor for [Obsidian](https://obsidian.md) with syntax highlighting, code folding, and autocompletion. Powered by [CodeMirror 6](https://codemirror.net/).
 
+| Demo | Settings |
+|----------|------------|
+| ![demo](assets/cm-code-editor-demo.png) | ![settings UI](assets/cm-code-editor-settings.png) |
+
 ## Installation
 
 [Install from community.obsidian.md](https://community.obsidian.md/plugins/cm-code-editor)
