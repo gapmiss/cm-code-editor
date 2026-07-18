@@ -6,7 +6,8 @@ A code file editor for [Obsidian](https://obsidian.md) with syntax highlighting,
 | --------------------------------------- | -------------------------------------------------- |
 | ![demo](assets/cm-code-editor-demo.png) | ![settings UI](assets/cm-code-editor-settings.png) |
 
-> [!info]
+> [!NOTE]
+> 
 > Requires Obsidian version 1.13.0+
 
 ## Installation
