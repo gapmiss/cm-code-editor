@@ -37,7 +37,7 @@ or:
 
 ## Features
 
-- **Syntax highlighting** for 20+ languages
+- **Syntax highlighting** for 25+ languages
 - **45+ syntax themes** (Dracula, GitHub, Monokai, Nord, Solarized, VS Code, and more) or inherit from your Obsidian theme
 - **Autocompletion** with built-in language completions for JavaScript, TypeScript, CSS, HTML, SQL, and Python
 - **Code folding** with gutter controls
@@ -60,7 +60,7 @@ or:
 | Python        | `.py` `.pyw` `.pyi`                         |
 | CSS/SCSS/Less | `.css` `.scss` `.less`                      |
 | HTML          | `.html` `.htm` `.svelte` `.vue`             |
-| JSON          | `.json` `.jsonc`                            |
+| JSON          | `.json` `.jsonc` `.jsonl`                   |
 | Markdown      | `.md` `.markdown`                           |
 | XML           | `.xml` `.svg` `.xsl` `.xsd`                 |
 | SQL           | `.sql`                                      |
@@ -77,6 +77,7 @@ or:
 | R             | `.r` `.rmd`                                 |
 | PowerShell    | `.ps1` `.psm1`                              |
 | Dockerfile    | `Dockerfile`                                |
+| Swift         | `.swift`                                    |
 
 ## Settings
 

@@ -21,6 +21,7 @@ import { toml } from '@codemirror/legacy-modes/mode/toml';
 import { r } from '@codemirror/legacy-modes/mode/r';
 import { powerShell } from '@codemirror/legacy-modes/mode/powershell';
 import { dockerFile } from '@codemirror/legacy-modes/mode/dockerfile';
+import { swift } from '@codemirror/legacy-modes/mode/swift';
 
 type LanguageFactory = () => Extension;
 
@@ -39,6 +40,7 @@ const tomlLang = new LanguageSupport(StreamLanguage.define(toml));
 const rLang = new LanguageSupport(StreamLanguage.define(r));
 const powerShellLang = new LanguageSupport(StreamLanguage.define(powerShell));
 const dockerFileLang = new LanguageSupport(StreamLanguage.define(dockerFile));
+const swiftLang = new LanguageSupport(StreamLanguage.define(swift));
 
 register(['ts', 'tsx', 'mts', 'cts'], () => javascript({ typescript: true, jsx: true }));
 register(['js', 'jsx', 'mjs', 'cjs'], () => javascript({ jsx: true }));
@@ -46,7 +48,7 @@ register(['py', 'pyw', 'pyi'], () => python());
 register(['css'], () => css());
 register(['scss', 'less'], () => css());
 register(['html', 'htm', 'svelte', 'vue'], () => html());
-register(['json', 'jsonc'], () => json());
+register(['json', 'jsonc', 'jsonl'], () => json());
 register(['md', 'markdown'], () => markdown());
 register(['xml', 'svg', 'xsl', 'xsd'], () => xml());
 register(['sql'], () => sql());
@@ -63,6 +65,7 @@ register(['toml'], () => tomlLang);
 register(['r', 'rmd'], () => rLang);
 register(['ps1', 'psm1'], () => powerShellLang);
 register(['dockerfile'], () => dockerFileLang);
+register(['swift'], () => swiftLang);
 
 export function resolveLanguage(ext: string): Extension {
 	const factory = langMap.get(ext.toLowerCase());

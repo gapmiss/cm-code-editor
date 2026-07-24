@@ -10,7 +10,7 @@ CodeMirror 6-based code file editor plugin for Obsidian. Opens registered file e
 - `src/view.ts` — `CodeEditorView` extends `TextFileView`. Creates and manages the CM6 `EditorView`. Handles file loading, saving, Ctrl+scroll zoom, and search hotkeys via Obsidian `Scope`.
 - `src/extensions.ts` — CM6 extension builder. Uses **Compartments** for dynamic reconfiguration of: language, line numbers, folding, wrap, font, theme, tab size, indent guides.
 - `src/settings.ts` — `PluginSettings` interface, defaults, theme options map, and settings tab using `getSettingDefinitions()` (Obsidian 1.13+ declarative API).
-- `src/languages.ts` — Maps file extensions to CM6 language support. Includes modern language packages and legacy stream-based languages.
+- `src/languages.ts` — Maps file extensions to CM6 language support. Includes modern language packages and legacy stream-based languages (shell, ruby, lua, toml, r, powershell, dockerfile, swift).
 - `src/folder-suggest.ts` — `FolderSuggest` extending `AbstractInputSuggest` for fuzzy folder search in settings.
 - `src/create-modal.ts` — Modal for creating new code files with extension dropdown.
 - `styles.css` — Obsidian CSS variable mappings for `.tok-*` syntax classes (used when theme is "Obsidian default").
