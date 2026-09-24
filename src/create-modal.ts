@@ -47,7 +47,8 @@ export class CreateCodeFileModal extends Modal {
 		const extDropdown = new DropdownComponent(row);
 		extDropdown.selectEl.addClass('code-editor-create-modal-ext');
 		const options: Record<string, string> = {};
-		for (const ext of this.plugin.settings.extensions) {
+		const sorted = [...this.plugin.settings.extensions].sort((a, b) => a.localeCompare(b));
+		for (const ext of sorted) {
 			options[ext] = `.${ext}`;
 		}
 		extDropdown.addOptions(options);
