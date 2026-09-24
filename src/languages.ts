@@ -22,6 +22,7 @@ import { r } from '@codemirror/legacy-modes/mode/r';
 import { powerShell } from '@codemirror/legacy-modes/mode/powershell';
 import { dockerFile } from '@codemirror/legacy-modes/mode/dockerfile';
 import { swift } from '@codemirror/legacy-modes/mode/swift';
+import { csharp } from '@codemirror/legacy-modes/mode/clike';
 
 type LanguageFactory = () => Extension;
 
@@ -41,6 +42,7 @@ const rLang = new LanguageSupport(StreamLanguage.define(r));
 const powerShellLang = new LanguageSupport(StreamLanguage.define(powerShell));
 const dockerFileLang = new LanguageSupport(StreamLanguage.define(dockerFile));
 const swiftLang = new LanguageSupport(StreamLanguage.define(swift));
+const csharpLang = new LanguageSupport(StreamLanguage.define(csharp));
 
 register(['ts', 'tsx', 'mts', 'cts'], () => javascript({ typescript: true, jsx: true }));
 register(['js', 'jsx', 'mjs', 'cjs'], () => javascript({ jsx: true }));
@@ -66,6 +68,7 @@ register(['r', 'rmd'], () => rLang);
 register(['ps1', 'psm1'], () => powerShellLang);
 register(['dockerfile'], () => dockerFileLang);
 register(['swift'], () => swiftLang);
+register(['cs', 'csx'], () => csharpLang);
 
 export function resolveLanguage(ext: string): Extension {
 	const factory = langMap.get(ext.toLowerCase());

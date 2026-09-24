@@ -78,6 +78,7 @@ or:
 | PowerShell    | `.ps1` `.psm1`                              |
 | Dockerfile    | `Dockerfile`                                |
 | Swift         | `.swift`                                    |
+| C#            | `.cs` `.csx`                                |
 
 ## Settings
 
