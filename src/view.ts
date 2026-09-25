@@ -1,5 +1,5 @@
 import { Scope, TextFileView } from 'obsidian';
-import type { TFile, WorkspaceLeaf } from 'obsidian';
+import type { TFile, ViewStateResult, WorkspaceLeaf } from 'obsidian';
 import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
 import { findNext, findPrevious, openSearchPanel } from '@codemirror/search';
@@ -10,6 +10,15 @@ import type { PluginSettings } from './settings';
 import type CodeEditorPlugin from './main';
 
 export const VIEW_TYPE = 'code-editor';
+
+declare module 'obsidian' {
+	interface FileView {
+		// Internal: the editable view header title.
+		titleEl: HTMLElement;
+		// Internal: FileView binds this to the vault 'delete' event in onload.
+		onDelete(file: TFile): Promise<void>;
+	}
+}
 
 export class CodeEditorView extends TextFileView {
 	private editor: EditorView | null = null;
@@ -29,6 +38,15 @@ export class CodeEditorView extends TextFileView {
 
 	getDisplayText(): string {
 		return this.file?.name ?? 'Code';
+	}
+
+	async setState(state: unknown, result: ViewStateResult): Promise<void> {
+		await super.setState(state, result);
+		// FileView fills the header title from getDisplayText() on load, but
+		// title rename appends the extension to whatever the user types, so
+		// the full name would yield "a.md.txt". Keep the header at basename,
+		// as FileView itself does on rename, blur, and Escape.
+		if (this.file) this.titleEl.setText(this.file.basename);
 	}
 
 	getIcon(): string {
@@ -116,6 +134,23 @@ export class CodeEditorView extends TextFileView {
 		await super.onClose();
 		this.editor?.destroy();
 		this.editor = null;
+	}
+
+	async onRename(file: TFile): Promise<void> {
+		await super.onRename(file);
+		if (file === this.file) this.updateLanguage(file.extension);
+	}
+
+	async onDelete(file: TFile): Promise<void> {
+		const leaf = this.leaf;
+		const wasOpen = file === this.file;
+		await super.onDelete(file);
+		// FileView swaps in the empty view via leaf.open(null), which does not
+		// refresh the tab header, so our title and icon would linger. Setting
+		// the view state again forces a header update.
+		if (wasOpen && this.app.workspace.getLeavesOfType('empty').includes(leaf)) {
+			await leaf.setViewState({ type: 'empty' });
+		}
 	}
 
 	getViewData(): string {
