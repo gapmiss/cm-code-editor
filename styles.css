@@ -244,6 +244,12 @@
 	flex: none;
 }
 
+.code-editor-rename-error {
+	margin: calc(var(--size-4-2) * -1) 0 var(--size-4-4) 0;
+	color: var(--text-error);
+	font-size: var(--font-ui-small);
+}
+
 .code-editor-create-modal-submit {
 	width: 100%;
 }

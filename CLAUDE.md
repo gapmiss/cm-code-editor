@@ -13,6 +13,7 @@ CodeMirror 6-based code file editor plugin for Obsidian. Opens registered file e
 - `src/languages.ts` — Maps file extensions to CM6 language support. Includes modern language packages and legacy stream-based languages (shell, ruby, lua, toml, r, powershell, dockerfile, swift, csharp).
 - `src/folder-suggest.ts` — `FolderSuggest` extending `AbstractInputSuggest` for fuzzy folder search in settings.
 - `src/create-modal.ts` — Modal for creating new code files with extension dropdown.
+- `src/rename-modal.ts` — Modal for renaming a file including its extension (Obsidian's inline title and explorer rename only edit the basename). Reopens affected leaves when the new extension belongs to a different view.
 - `styles.css` — Obsidian CSS variable mappings for `.tok-*` syntax classes (used when theme is "Obsidian default").
 
 ## Key patterns
@@ -22,6 +23,10 @@ CodeMirror 6-based code file editor plugin for Obsidian. Opens registered file e
 - **Settings tab** uses `getSettingDefinitions()` (not `display()`). Custom controls like folder suggest use `SettingDefinitionRender` with a `render` callback.
 - **Search hotkeys** (Cmd+F, Cmd+G, F3) use `this.scope = new Scope(this.app.scope)` on the view, which overrides Obsidian's default hotkeys (e.g. graph view's Cmd+G) when the code editor is active.
 - **Tab indentation** uses a custom Tab/Shift-Tab keybinding that reads `EditorState.tabSize` (shared facet from `@codemirror/state`) instead of `indentWithTab` from `@codemirror/commands`, because `indentWithTab` reads `indentUnit` from Obsidian's `@codemirror/language` — a different facet instance than the one bundled in this plugin.
+- **Tab title vs. header title**: `getDisplayText()` returns the full file name for the tab, but `setState()` resets the view header title (`titleEl`) to `file.basename`. Obsidian's inline title rename appends the extension to the typed text, so a full name there produces `a.md.txt`.
+- **Delete handling**: `FileView.onDelete` swaps in the empty view via `leaf.open(null)`, which does not refresh the tab header. `CodeEditorView.onDelete` calls `setViewState({ type: 'empty' })` afterwards to force the update.
+- **Extension registration**: `plugin.registerExtension()` tracks what this plugin claimed in `registeredExtensions`. Startup registers every extension in settings. The rename modal registers any added since then when they are used.
+- **Internal APIs** (declared via `declare module 'obsidian'` augmentation, not in the public typings): `FileView.titleEl`, `FileView.onDelete` (`view.ts`); `App.viewRegistry.isExtensionRegistered`, `App.setting.open/openTabById` (`rename-modal.ts`, both optional with fallbacks). Recheck these after Obsidian updates.
 - **`@codemirror/language` must NOT be external** in esbuild. It is intentionally bundled because legacy stream languages (shell, ruby, lua, toml, etc.) use `StreamLanguage` which Obsidian's runtime may not expose. The tradeoff is a split `indentUnit` facet, which is why Tab uses the custom keybinding above.
 
 ## Build

@@ -1,11 +1,13 @@
-import { Notice, Plugin } from 'obsidian';
+import { Notice, Plugin, TFile } from 'obsidian';
 import { CodeEditorSettingsTab, DEFAULT_SETTINGS } from './settings';
 import type { PluginSettings } from './settings';
 import { CodeEditorView, VIEW_TYPE } from './view';
 import { CreateCodeFileModal } from './create-modal';
+import { RenameFileModal } from './rename-modal';
 
 export default class CodeEditorPlugin extends Plugin {
 	settings: PluginSettings = DEFAULT_SETTINGS;
+	registeredExtensions = new Set<string>();
 
 	async onload(): Promise<void> {
 		await this.loadSettings();
@@ -14,11 +16,7 @@ export default class CodeEditorPlugin extends Plugin {
 
 		const failed: string[] = [];
 		for (const ext of this.settings.extensions) {
-			try {
-				this.registerExtensions([ext], VIEW_TYPE);
-			} catch {
-				failed.push(ext);
-			}
+			if (!this.registerExtension(ext)) failed.push(ext);
 		}
 		if (failed.length > 0) {
 			new Notice(`Code editor: could not register extensions already claimed by another plugin: ${failed.join(', ')}`);
@@ -34,6 +32,17 @@ export default class CodeEditorPlugin extends Plugin {
 			},
 		});
 
+		this.addCommand({
+			id: 'rename-with-extension',
+			name: 'Rename file with extension',
+			checkCallback: (checking) => {
+				const file = this.app.workspace.getActiveFile();
+				if (!file) return false;
+				if (!checking) new RenameFileModal(this, file).open();
+				return true;
+			},
+		});
+
 		this.registerEvent(
 			this.app.workspace.on('file-menu', (menu, file) => {
 				menu.addItem((item) => {
@@ -43,6 +52,15 @@ export default class CodeEditorPlugin extends Plugin {
 							new CreateCodeFileModal(this, file).open();
 						});
 				});
+				if (file instanceof TFile) {
+					menu.addItem((item) => {
+						item.setTitle('Rename with extension')
+							.setIcon('pencil')
+							.onClick(() => {
+								new RenameFileModal(this, file).open();
+							});
+					});
+				}
 			}),
 		);
 
@@ -50,6 +68,18 @@ export default class CodeEditorPlugin extends Plugin {
 
 	onunload(): void {
 		// Cleanup handled automatically by Obsidian
+	}
+
+	/** Returns false if another plugin or view already claims the extension. */
+	registerExtension(ext: string): boolean {
+		if (this.registeredExtensions.has(ext)) return true;
+		try {
+			this.registerExtensions([ext], VIEW_TYPE);
+			this.registeredExtensions.add(ext);
+			return true;
+		} catch {
+			return false;
+		}
 	}
 
 	async loadSettings(): Promise<void> {

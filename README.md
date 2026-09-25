@@ -49,6 +49,8 @@ or:
 - **Multiple cursors** and **rectangular selection** (Alt+drag)
 - **Font size zoom** with Ctrl/Cmd+scroll
 - **Create code file** command and context menu action with configurable default folder
+- **Rename with extension** command and context menu action to change a file's extension (Obsidian's title and file explorer rename only the name). Only extensions that Obsidian or this plugin can open are allowed, and open tabs switch to the matching view (e.g. renaming `.txt` to `.md` opens the Markdown editor)
+- **Full file name in tab titles** so files that differ only by extension are easy to tell apart
 - **Configurable file extensions**, font family, and font size
 
 ## Supported languages
@@ -86,7 +88,7 @@ or:
 
 | Setting         | Description                                                 | Default                |
 | --------------- | ----------------------------------------------------------- | ---------------------- |
-| File extensions | Comma-separated list of extensions to open with this editor | `ts, js, py, css, ...` |
+| File extensions | Comma-separated list of extensions to open with this editor. New extensions take effect after a plugin reload, or immediately when used in **Rename with extension**. | `ts, js, py, css, ...` |
 | Default folder  | Default folder for new code files (with fuzzy search)       | Vault root             |
 
 ### Editor
