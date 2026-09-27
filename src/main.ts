@@ -19,7 +19,7 @@ export default class CodeEditorPlugin extends Plugin {
 			if (!this.registerExtension(ext)) failed.push(ext);
 		}
 		if (failed.length > 0) {
-			new Notice(`Code editor: could not register extensions already claimed by another plugin: ${failed.join(', ')}`);
+			new Notice(`CM Code Editor: these extensions are already opened by Obsidian or another plugin: ${failed.join(', ')}`);
 		}
 
 		this.addSettingTab(new CodeEditorSettingsTab(this.app, this));

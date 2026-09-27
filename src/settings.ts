@@ -127,7 +127,7 @@ export class CodeEditorSettingsTab extends PluginSettingTab {
 				items: [
 					{
 						name: 'File extensions',
-						desc: 'Comma-separated list of file extensions to open with this editor.',
+						desc: 'Comma-separated list of file extensions to open with this editor. Reload the plugin to apply changes.',
 						control: {
 							type: 'textarea',
 							key: 'extensions',
@@ -227,7 +227,7 @@ export class CodeEditorSettingsTab extends PluginSettingTab {
 				items: [
 					{
 						name: 'Font size',
-						desc: 'Font size in pixels (5–30). Use Ctrl+scroll in the editor to adjust.',
+						desc: 'Font size in pixels, from 5 to 30. You can also hold Ctrl or Cmd and scroll in the editor.',
 						control: {
 							type: 'slider',
 							key: 'fontSize',
