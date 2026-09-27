@@ -2,7 +2,7 @@ import { Scope, TextFileView } from 'obsidian';
 import type { TFile, ViewStateResult, WorkspaceLeaf } from 'obsidian';
 import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
-import { findNext, findPrevious, openSearchPanel } from '@codemirror/search';
+import { findNext, findPrevious, openSearchPanel, selectNextOccurrence } from '@codemirror/search';
 import { resolveLanguage } from './languages';
 import { applySettings, buildExtensions, createCompartments } from './extensions';
 import type { EditorCompartments } from './extensions';
@@ -100,6 +100,15 @@ export class CodeEditorView extends TextFileView {
 			if (!this.editor) return;
 			evt.preventDefault();
 			findPrevious(this.editor);
+			return false;
+		});
+
+		// Obsidian binds Mod+D to "Delete paragraph", which swallows the key
+		// before CodeMirror's searchKeymap sees it.
+		this.scope!.register(['Mod'], 'd', (evt) => {
+			if (!this.editor) return;
+			evt.preventDefault();
+			selectNextOccurrence(this.editor);
 			return false;
 		});
 

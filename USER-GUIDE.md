@@ -101,7 +101,7 @@ Ctrl/Cmd means Ctrl on Windows and Linux, Cmd on macOS.
 | Rectangular selection         | Alt+drag                        |
 | Zoom in / out                 | Ctrl/Cmd+scroll                 |
 
-The search shortcuts win over Obsidian's own while a code file is focused. For example, Ctrl/Cmd+G finds the next match instead of opening the graph view.
+A few of these override Obsidian's own shortcuts while a code file is focused. Ctrl/Cmd+G finds the next match instead of opening the graph view, and Ctrl/Cmd+D selects the next occurrence instead of deleting a paragraph. They work as usual everywhere else.
 
 The plugin doesn't assign hotkeys to its commands. To add some, go to **Settings → Hotkeys** and search for "CM Code Editor".
 
