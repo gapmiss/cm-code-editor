@@ -105,7 +105,12 @@ const themeMap: Record<string, Extension> = {
 
 function themeExtension(name: string): Extension {
 	if (name && themeMap[name]) return themeMap[name];
-	return syntaxHighlighting(classHighlighter);
+	// The class scopes the Obsidian-variable chrome in styles.css (gutters,
+	// active line, selection, cursor) so it doesn't fight a selected CM6 theme.
+	return [
+		syntaxHighlighting(classHighlighter),
+		EditorView.editorAttributes.of({ class: 'code-editor-obsidian-theme' }),
+	];
 }
 
 function lineNumbersExtension(enabled: boolean): Extension {

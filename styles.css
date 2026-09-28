@@ -13,34 +13,44 @@
 	font-family: var(--font-monospace);
 }
 
-.code-editor-view .cm-gutters {
+/* Overrides the fixed hex colors of @replit/codemirror-indentation-markers,
+   which ignore Obsidian's light/dark mode. */
+.code-editor-view .cm-editor {
+	--indent-marker-bg-color: color-mix(in srgb, currentColor 15%, transparent);
+	--indent-marker-active-bg-color: color-mix(in srgb, currentColor 30%, transparent);
+}
+
+.code-editor-view .code-editor-obsidian-theme .cm-gutters {
 	background: var(--background-secondary);
 	border-right: 1px solid var(--background-modifier-border);
 	color: var(--text-faint);
 }
 
-.code-editor-view .cm-line.cm-activeLine {
+.code-editor-view .code-editor-obsidian-theme .cm-line.cm-activeLine {
 	background: color-mix(in srgb, var(--background-secondary-alt) 60%, transparent);
 }
 
-.code-editor-view .cm-activeLineGutter {
+.code-editor-view .code-editor-obsidian-theme .cm-activeLineGutter {
 	background: var(--background-secondary-alt);
 }
 
-.code-editor-view .cm-editor > .cm-scroller > .cm-selectionLayer .cm-selectionBackground {
+.code-editor-view .cm-editor.code-editor-obsidian-theme > .cm-scroller > .cm-selectionLayer .cm-selectionBackground {
 	background: var(--text-selection);
 }
 
-.code-editor-view .cm-editor.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground {
+.code-editor-view .cm-editor.code-editor-obsidian-theme.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground {
 	background: var(--text-selection);
 }
 
-.code-editor-view .cm-cursor {
+.code-editor-view .code-editor-obsidian-theme .cm-cursor {
 	border-left-color: var(--text-normal);
 }
 
-.code-editor-view .cm-foldGutter .cm-gutterElement {
+.code-editor-view .code-editor-obsidian-theme .cm-foldGutter .cm-gutterElement {
 	color: var(--text-faint);
+}
+
+.code-editor-view .cm-foldGutter .cm-gutterElement {
 	cursor: pointer;
 	padding: 0 var(--size-4-1);
 }
@@ -50,12 +60,17 @@
 }
 
 .code-editor-view .cm-searchMatch {
-	background: var(--text-highlight-bg);
+	background: color-mix(in srgb, var(--color-yellow) 20%, transparent);
+	outline: 1px solid color-mix(in srgb, var(--color-yellow) 50%, transparent);
+}
+
+.code-editor-view .cm-searchMatch.cm-searchMatch-selected {
+	background: color-mix(in srgb, var(--color-yellow) 40%, transparent);
+	outline-color: var(--color-yellow);
 }
 
 .code-editor-view .cm-selectionMatch {
-	background: var(--text-highlight-bg);
-	opacity: 0.5;
+	background: color-mix(in srgb, currentColor 12%, transparent);
 }
 
 .code-editor-view .tok-keyword { color: var(--code-keyword); }
